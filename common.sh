@@ -17,8 +17,8 @@ function init() {
     # use Ubuntu Cloud Archive repository
     # this script needs Ubuntu Cloud Archive for Grizzly, so we are using 12.04 LTS.
     apt-get install ubuntu-cloud-keyring
-    echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list
-    apt-get update
+    #echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list
+    #apt-get update
 }
 
 # --------------------------------------------------------------------------------------
@@ -228,12 +228,12 @@ function glance_setup() {
 # --------------------------------------------------------------------------------------
 function os_add () {
     # backup exist os image
-    if [[ -f ./os.img ]]; then
-        mv ./os.img ./os.img.bk
-    fi
+    #if [[ -f ./os.img ]]; then
+    #    mv ./os.img ./os.img.bk
+    #fi
     
     # download cirros os image
-    wget --no-check-certificate ${OS_IMAGE_URL} -O ./os.img
+    #wget --no-check-certificate ${OS_IMAGE_URL} -O ./os.img
     
     # add os image to glance
     glance image-create --name="${OS_IMAGE_NAME}" --is-public true --container-format bare --disk-format qcow2 < ./os.img
@@ -573,18 +573,18 @@ function cinder_setup() {
     # input database for cinder
     cinder-manage db sync
 
-    if echo "$CINDER_VOLUME" | grep "loop" ; then
-        dd if=/dev/zero of=/var/lib/cinder/volumes-disk bs=2 count=0 seek=7G
-        FILE=/var/lib/cinder/volumes-disk
-        modprobe loop
-        losetup $CINDER_VOLUME $FILE
-        pvcreate $CINDER_VOLUME
-        vgcreate cinder-volumes $CINDER_VOLUME
-    else
+    #if echo "$CINDER_VOLUME" | grep "loop" ; then
+    #    dd if=/dev/zero of=/var/lib/cinder/volumes-disk bs=2 count=0 seek=7G
+    #    FILE=/var/lib/cinder/volumes-disk
+    #    modprobe loop
+    #    losetup $CINDER_VOLUME $FILE
+    #    pvcreate $CINDER_VOLUME
+    #    vgcreate cinder-volumes $CINDER_VOLUME
+    #else
         # create pyshical volume and volume group
-        pvcreate ${CINDER_VOLUME}
-        vgcreate cinder-volumes ${CINDER_VOLUME}
-    fi
+    #    pvcreate ${CINDER_VOLUME}
+    #    vgcreate cinder-volumes ${CINDER_VOLUME}
+    #fi
 
     # disable tgt daemon
     stop_service tgt
