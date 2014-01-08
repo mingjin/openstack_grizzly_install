@@ -12,11 +12,11 @@ function init() {
     cp $BASE_DIR/conf/etc.ntp.conf /etc/ntp.conf
 
     # install misc software
-    apt-get install -y vlan bridge-utils
+    apt-get install -y --force-yes vlan bridge-utils
 
     # use Ubuntu Cloud Archive repository
     # this script needs Ubuntu Cloud Archive for Grizzly, so we are using 12.04 LTS.
-    apt-get install ubuntu-cloud-keyring
+    apt-get install -y --force-yes ubuntu-cloud-keyring
     #echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list
     #apt-get update
 }
